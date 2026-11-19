@@ -1,0 +1,30 @@
+de:
+  label_project_icons_tab: Darstellung
+  label_project_icons_preview: Vorschau
+  field_project_icons_icon: Icon
+  field_project_icons_color: Farbe
+  button_project_icons_remove: Icon entfernen
+  label_project_icons_color_inherit: Vom Elternprojekt
+  label_project_icons_color_none: Keine
+  label_project_icons_color_custom: Eigene
+  text_project_icons_none: Kein Icon und keine Farbe – das Projekt erscheint wie bisher.
+  text_project_icons_icon_hint: "PNG, JPG, WebP, GIF oder SVG, höchstens 2 MB. Rasterbilder werden ganz sichtbar auf %{size} × %{size} px gebracht. Ohne Icon erscheint eine Kachel mit dem Anfangsbuchstaben in der Projektfarbe."
+  text_project_icons_inherited_icon: "Ohne eigenes Icon gilt das von „%{project}“."
+  text_project_icons_color_hint: Hintergrund der Kachel mit dem Anfangsbuchstaben, wenn kein Icon hinterlegt ist. Unterprojekte übernehmen die Farbe, solange sie keine eigene haben.
+  text_project_icons_inherited_color: "Ohne eigene Farbe gilt die von „%{project}“."
+  text_project_icons_color_unused: Derzeit nicht sichtbar – für dieses Projekt gilt ein Icon.
+  error_project_icons_blank: Bitte eine Bilddatei auswählen.
+  error_project_icons_too_large: Die Datei ist größer als 2 MB.
+  error_project_icons_type: Dieses Dateiformat wird nicht unterstützt (erlaubt sind PNG, JPG, WebP, GIF und SVG).
+  error_project_icons_processing: Das Bild konnte nicht verarbeitet werden.
+  error_project_icons_color: Bitte eine gültige Farbe angeben (z. B. #1d4ed8).
+
+  text_project_icons_settings_intro: Wo Projekt-Icons erscheinen. Icon und Farbe werden in den Einstellungen jedes Projekts gepflegt (Reiter „Darstellung“).
+  field_project_icons_show_in_project_list: Projektliste
+  field_project_icons_show_in_issue_lists: Ticketlisten
+  field_project_icons_show_in_header: Kopf und Projektauswahl
+  field_project_icons_show_in_planning: Kalender und Gantt
+  text_project_icons_show_in_project_list: Icons vor Haupt- und Unterprojekten.
+  text_project_icons_show_in_issue_lists: Icon vor dem Projektnamen in der Spalte „Projekt“ (Tickets, Zeiten, Meine Seite, Versionen).
+  text_project_icons_show_in_header: Icon vor dem Projekttitel und in „Zu einem Projekt springen“.
+  text_project_icons_show_in_planning: Icon vor Tickets im Kalender und vor Projekten im Gantt-Diagramm.

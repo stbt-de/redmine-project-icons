@@ -1,0 +1,186 @@
+/*
+ * Project Icons – Grunddarstellung für jedes Theme.
+ *
+ *   .project-icon          Bild oder Kachel, Größe über --project-icon-size
+ *   .project-icon-tile     Kachel mit Anfangsbuchstaben in --project-color
+ *
+ * Regeln in :where() haben keine Spezifität: dieses Stylesheet wird nach
+ * dem Theme geladen, Themes können alles mit eigenen Regeln übersteuern.
+ */
+
+:where(.project-icon) {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: var(--project-icon-size, 16px);
+  height: var(--project-icon-size, 16px);
+  margin-inline-end: 0.4em;
+  vertical-align: middle;
+  border-radius: calc(var(--project-icon-size, 16px) * 0.22);
+}
+
+:where(img.project-icon) {
+  object-fit: contain;
+}
+
+:where(.project-icon-tile) {
+  font-size: calc(var(--project-icon-size, 16px) * 0.55);
+  font-weight: 600;
+  line-height: 1;
+  color: #fff;
+  background-color: var(--project-color, #475569);
+}
+
+/* Links mit Icon: Icon und Name auf einer Linie */
+:where(a:has(> .project-icon)) {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Kopf: Redmine setzt den Seitentitel als Spalte (Brotkrumen über dem
+   Projekt). Icon links daneben, bei Brotkrumen über beide Zeilen mittig.
+   Normale Spezifität, sie muss Redmines #header h1 schlagen. */
+#header h1:has(> .project-icon) {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: 0.5em;
+  align-items: center;
+}
+
+#header h1 > .project-icon {
+  margin: 0;
+}
+
+#header h1:has(> .breadcrumbs) > .project-icon {
+  grid-row: 1 / span 2;
+}
+
+/* Kalender: Redmine schreibt "Projekt - " als Text vor das Ticket;
+   project_icons.js setzt das Icon an den Anfang des Eintrags */
+.cal .calbody div.issue > .project-icon:first-child {
+  margin-inline-end: 4px;
+  vertical-align: -3px;
+}
+
+/* Gantt: das Projekt-Icon ersetzt Redmines allgemeines Projektsymbol */
+.gantt_subjects .icon-projects:has(> a > .project-icon) > svg {
+  display: none;
+}
+
+/* Auf Projektseiten ersetzt das Projekt-Icon im Titel das Logo: zwei Kacheln
+   nebeneinander wirken unruhig. Logo des Plugins redmine_branding dort
+   ausblenden. Mobil (.branding-logo-mobile) bleibt das Logo stehen – es ist
+   der Weg zurück zur Startseite; das Projekt-Icon steht in der Projektauswahl. */
+#header h1:has(> .project-icon) > .branding-logo {
+  display: none;
+}
+
+/* Themes, die das Logo selbst darstellen (data-branding-logo="theme"), zeigen
+   das Projekt-Icon an dessen Stelle (<meta name="project-icon">) – das Icon
+   im Titel entfällt dort */
+[data-branding-logo="theme"] #header h1 > .project-icon {
+  display: none;
+}
+
+[data-branding-logo="theme"] #header h1:has(> .project-icon) {
+  display: revert;
+}
+
+/* Projektauswahl: Icon mittig zur Schrift */
+#project-jump .drdn-trigger > .project-icon {
+  margin-block-start: -0.15em;
+  vertical-align: middle;
+}
+
+/* Einstellungen: Vorschau und Farbpalette */
+:where(.project-icons-preview) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+}
+
+:where(.project-icons-palette) {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Redmine setzt jedes label in .tabular als Spalte links neben das Feld
+   (float, feste Breite, negativer Rand) – für die Farbfelder zurücksetzen.
+   Mit ID, damit es gegen Redmine und Themes greift. */
+#project-icons-form .project-icons-palette label.project-icons-swatch {
+  float: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  width: auto;
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+  line-height: 1.5;
+  text-align: left;
+  cursor: pointer;
+}
+
+/* Auswahl über die Farbfelder selbst: Radio unsichtbar (bleibt bedienbar
+   und für Screenreader da), gewählt = Ring */
+#project-icons-form .project-icons-swatch input[type="radio"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  opacity: 0;
+}
+
+:where(.project-icons-swatch-color),
+#project-icons-form .project-icons-swatch input[type="color"] {
+  display: inline-block;
+  box-sizing: border-box;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  background-color: var(--project-color);
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#project-icons-form .project-icons-swatch input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+#project-icons-form .project-icons-swatch input[type="color"]::-webkit-color-swatch {
+  border: 0;
+  border-radius: 6px;
+}
+
+#project-icons-form .project-icons-swatch input[type="color"]::-moz-color-swatch {
+  border: 0;
+  border-radius: 6px;
+}
+
+/* Textoptionen ("Vom Elternprojekt", "Eigene") als kleine Schaltfläche */
+:where(.project-icons-swatch-none, .project-icons-swatch-custom) > span {
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+/* Gewählt */
+#project-icons-form .project-icons-swatch input:checked + .project-icons-swatch-color,
+#project-icons-form .project-icons-swatch-custom input:checked ~ input[type="color"] {
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #171717;
+}
+
+#project-icons-form :is(.project-icons-swatch-none, .project-icons-swatch-custom) input:checked + span {
+  font-weight: 600;
+  background-color: rgba(0, 0, 0, 0.06);
+}
+
+/* Tastatur-Fokus */
+#project-icons-form .project-icons-swatch input:focus-visible + * {
+  outline: 2px solid #171717;
+  outline-offset: 3px;
+}

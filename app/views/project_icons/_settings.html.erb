@@ -1,0 +1,71 @@
+<%# Projekteinstellungen → Darstellung: Icon und Farbe des Projekts %>
+<% own = @project.project_icon %>
+<% effective = RedmineProjectIcons::Resolver.effective(@project) %>
+<% inherited_icon = effective&.icon? && effective.source_project_id != @project.id %>
+<% inherited_color = effective&.color && effective.color_project_id != @project.id %>
+<% current_color = own&.color.to_s %>
+<% custom_color = current_color.present? && !RedmineProjectIcons::Palette::COLORS.include?(current_color) %>
+
+<%= form_tag(project_icon_path(@project), multipart: true, id: 'project-icons-form') do %>
+  <div class="box tabular">
+    <p>
+      <label><%= l(:label_project_icons_preview) %></label>
+      <span class="project-icons-preview">
+        <% if effective %>
+          <%= project_icon_tag(@project, size: 48) %>
+          <span class="project-icons-preview-name"><%= @project.name %></span>
+        <% else %>
+          <em class="info"><%= l(:text_project_icons_none) %></em>
+        <% end %>
+      </span>
+    </p>
+
+    <p>
+      <label for="project_icons_file"><%= l(:field_project_icons_icon) %></label>
+      <%= file_field_tag 'file', id: 'project_icons_file',
+                         accept: (ProjectIcon::RASTER_TYPES + [ProjectIcon::SVG_TYPE]).join(',') %>
+      <% if own&.icon? %>
+        <%= link_to sprite_icon('del', l(:button_project_icons_remove)), project_icon_path(@project),
+                    method: :delete, data: { confirm: l(:text_are_you_sure) }, class: 'icon icon-del' %>
+      <% end %>
+      <em class="info">
+        <%= l(:text_project_icons_icon_hint, size: ProjectIcon::SIZE) %>
+        <% if inherited_icon %>
+          <br><%= l(:text_project_icons_inherited_icon, project: Project.find_by(id: effective.source_project_id)&.name) %>
+        <% end %>
+      </em>
+    </p>
+
+    <p class="project-icons-colors">
+      <label><%= l(:field_project_icons_color) %></label>
+      <span class="project-icons-palette">
+        <label class="project-icons-swatch project-icons-swatch-none">
+          <%= radio_button_tag 'color', '', current_color.blank?, id: 'project_icons_color_none' %>
+          <span><%= @project.parent ? l(:label_project_icons_color_inherit) : l(:label_project_icons_color_none) %></span>
+        </label>
+        <% RedmineProjectIcons::Palette::COLORS.each do |color| %>
+          <label class="project-icons-swatch" title="<%= color %>">
+            <%= radio_button_tag 'color', color, current_color == color, id: "project_icons_color_#{color.delete('#')}" %>
+            <span class="project-icons-swatch-color" style="--project-color: <%= color %>"></span>
+          </label>
+        <% end %>
+        <label class="project-icons-swatch project-icons-swatch-custom">
+          <%= radio_button_tag 'color', 'custom', custom_color, id: 'project_icons_color_custom' %>
+          <span><%= l(:label_project_icons_color_custom) %></span>
+          <%= color_field_tag 'custom_color', (custom_color ? current_color : '#475569'), id: 'project_icons_custom_color',
+                              onfocus: "document.getElementById('project_icons_color_custom').checked = true" %>
+        </label>
+      </span>
+      <em class="info">
+        <%= l(:text_project_icons_color_hint) %>
+        <% if effective&.icon? %>
+          <br><span class="project-icons-color-unused"><%= l(:text_project_icons_color_unused) %></span>
+        <% end %>
+        <% if inherited_color %>
+          <br><%= l(:text_project_icons_inherited_color, project: Project.find_by(id: effective.color_project_id)&.name) %>
+        <% end %>
+      </em>
+    </p>
+  </div>
+  <p><%= submit_tag l(:button_save) %></p>
+<% end %>

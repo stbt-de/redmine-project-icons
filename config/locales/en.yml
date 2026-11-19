@@ -1,0 +1,30 @@
+en:
+  label_project_icons_tab: Appearance
+  label_project_icons_preview: Preview
+  field_project_icons_icon: Icon
+  field_project_icons_color: Colour
+  button_project_icons_remove: Remove icon
+  label_project_icons_color_inherit: From parent project
+  label_project_icons_color_none: None
+  label_project_icons_color_custom: Custom
+  text_project_icons_none: No icon and no colour – the project appears as before.
+  text_project_icons_icon_hint: "PNG, JPG, WebP, GIF or SVG, at most 2 MB. Raster images are fitted (fully visible) into %{size} × %{size} px. Without an icon a tile with the first letter in the project colour is shown."
+  text_project_icons_inherited_icon: "Without an icon of its own, the one of \"%{project}\" applies."
+  text_project_icons_color_hint: Background of the tile with the first letter when no icon is set. Subprojects use this colour as long as they have none of their own.
+  text_project_icons_inherited_color: "Without a colour of its own, the one of \"%{project}\" applies."
+  text_project_icons_color_unused: Currently not visible – an icon applies to this project.
+  error_project_icons_blank: Please choose an image file.
+  error_project_icons_too_large: The file is larger than 2 MB.
+  error_project_icons_type: This file format is not supported (allowed are PNG, JPG, WebP, GIF and SVG).
+  error_project_icons_processing: The image could not be processed.
+  error_project_icons_color: Please enter a valid colour (e.g. #1d4ed8).
+
+  text_project_icons_settings_intro: Where project icons appear. Icon and colour are managed in each project's settings ("Appearance" tab).
+  field_project_icons_show_in_project_list: Project list
+  field_project_icons_show_in_issue_lists: Issue lists
+  field_project_icons_show_in_header: Header and project selector
+  field_project_icons_show_in_planning: Calendar and Gantt
+  text_project_icons_show_in_project_list: Icons before projects and subprojects.
+  text_project_icons_show_in_issue_lists: Icon before the project name in the "Project" column (issues, spent time, my page, versions).
+  text_project_icons_show_in_header: Icon before the project title and in "Jump to a project".
+  text_project_icons_show_in_planning: Icon before issues in the calendar and before projects in the Gantt chart.
